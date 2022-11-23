@@ -1,0 +1,65 @@
+plugins {
+    id "fabric-loom" version "1.0-SNAPSHOT"
+}
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+def mcVersion = project.mc_version
+def version = project.version
+
+archivesBaseName = "PlayerHeadSound-" + mcVersion
+version = "1.0.0"
+group = "com.stevekung.playerheadsound"
+
+dependencies {
+    minecraft "com.mojang:minecraft:${mc_version}"
+    mappings loom.layered() {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${rootProject.parchmentmc_version}@zip")
+    }
+
+    modApi "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    modLocalRuntime "maven.modrinth:lazydfu:0.1.3"
+}
+
+repositories {
+    maven {
+        name "ParchmentMC"
+        url "https://maven.parchmentmc.org"
+    }
+    maven {
+        name "Modrinth"
+        url "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
+}
+
+loom {
+    mixin {
+        defaultRefmapName = "mixins.playerheadsound.refmap.json"
+    }
+
+    runs {
+        client {
+            vmArg "-Dmixin.debug.export=true"
+            vmArg "-Dmixin.hotSwap=true"
+        }
+    }
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = "UTF-8"
+    it.options.release = 17
+}

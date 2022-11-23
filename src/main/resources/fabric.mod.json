@@ -1,0 +1,18 @@
+{
+    "schemaVersion": 1,
+    "id": "playerheadsound",
+    "version": "1.0.0",
+    "name": "Player Head Sound",
+    "description": "Adds an ability to play custom sound event from a player head",
+    "authors": [
+        "SteveKunG"
+    ],
+    "license": "MIT",
+    "environment": "*",
+    "depends": {
+        "fabricloader": ">=0.14.10"
+    },
+    "mixins": [
+        "mixins.playerheadsound.json"
+    ]
+}

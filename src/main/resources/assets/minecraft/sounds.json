@@ -1,0 +1,7 @@
+{
+  "entity.player.classic_hurt": {
+    "sounds": [
+      "classic_hurt"
+    ]
+  }
+}
